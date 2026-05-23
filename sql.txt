@@ -1,0 +1,138 @@
+-- ============================================================
+--   CAR RACING MANAGEMENT SYSTEM (FULL WORKING VERSION)
+--   KEEP OLD STRUCTURE + ADD FIXES + BOTH RACES SUPPORT
+-- ============================================================
+
+CREATE DATABASE IF NOT EXISTS racing_management;
+USE racing_management;
+
+-- -------------------------------------------------------
+-- RACERS TABLE
+-- -------------------------------------------------------
+CREATE TABLE IF NOT EXISTS racers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT,
+    city VARCHAR(100),
+    nationality VARCHAR(100) DEFAULT 'Bangladeshi',
+    phone VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- -------------------------------------------------------
+-- CARS TABLE
+-- -------------------------------------------------------
+CREATE TABLE IF NOT EXISTS cars (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    racer_id INT NOT NULL,
+    car_name VARCHAR(100),
+    team VARCHAR(100),
+    top_speed INT,
+    engine_cc INT,
+    color VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (racer_id) REFERENCES racers(id) ON DELETE CASCADE
+);
+
+-- -------------------------------------------------------
+-- TRACKS TABLE
+-- -------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tracks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    track_name VARCHAR(150),
+    location VARCHAR(150),
+    length_km DECIMAL(5,2),
+    track_type VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- -------------------------------------------------------
+-- RACES TABLE
+-- -------------------------------------------------------
+CREATE TABLE IF NOT EXISTS races (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    race_name VARCHAR(150),
+    track_id INT,
+    race_date DATE,
+    status VARCHAR(20) DEFAULT 'Upcoming',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (track_id) REFERENCES tracks(id)
+);
+
+-- -------------------------------------------------------
+-- RACE RESULTS TABLE
+-- -------------------------------------------------------
+CREATE TABLE IF NOT EXISTS race_results (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    race_id INT,
+    racer_id INT,
+    car_id INT,
+    position INT,
+    finish_time VARCHAR(20),
+    points INT DEFAULT 0,
+    dnf TINYINT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (race_id) REFERENCES races(id),
+    FOREIGN KEY (racer_id) REFERENCES racers(id),
+    FOREIGN KEY (car_id) REFERENCES cars(id)
+);
+
+-- ============================================================
+-- SAMPLE DATA (YOUR SYSTEM)
+-- ============================================================
+
+INSERT INTO racers (name, age, city) VALUES
+('Saad', 25, 'Dhaka'),
+('Abeer', 24, 'Chittagong'),
+('Zaman', 26, 'Rajshahi'),
+('Pranto', 23, 'Cumilla'),
+('Rayan', 35, 'Khulna'),
+('Somaya Hossain', 22, 'Dhaka');
+
+INSERT INTO cars (racer_id, car_name, team, top_speed) VALUES
+(1, 'Ferrari', 'Scuderia BD', 320),
+(2, 'Red Bull', 'RB Racing', 330),
+(3, 'Mercedes', 'Silver Arrows', 310),
+(4, 'McLaren', 'Papaya BD', 300),
+(5, 'Audi', 'Audi Sport', 310),
+(6, 'Porsche', 'Porsche BD', 230);
+
+INSERT INTO tracks (track_name, location, length_km, track_type) VALUES
+('Dhaka Grand Circuit', 'Dhaka', 5.40, 'Circuit'),
+('Chittagong Coastal Drag', 'Chittagong', 0.40, 'Drag'),
+('Rajshahi Ring', 'Rajshahi', 3.20, 'Circuit');
+
+-- ============================================================
+-- RACES (BOTH EVENTS)
+-- ============================================================
+
+INSERT INTO races (race_name, track_id, race_date, status) VALUES
+('Bangladesh Grand Prix', 1, '2025-06-15', 'Completed'),
+('Coastal Speed Festival', 2, '2025-05-20', 'Completed'),
+('Rajshahi Open Cup', 3, '2025-07-01', 'Upcoming');
+
+-- ============================================================
+-- RESULTS (COASTAL + BANGLADESH)
+-- ============================================================
+
+-- Coastal Speed Festival (race_id = 2)
+INSERT INTO race_results (race_id, racer_id, car_id, position, finish_time, points, dnf) VALUES
+(2, 2, 2, 1, '0:12:34', 25, 0),
+(2, 1, 1, 2, '0:12:41', 18, 0),
+(2, 3, 3, 3, '0:12:55', 15, 0),
+(2, 5, 5, 4, '0:13:10', 12, 0),
+(2, 4, 4, 5, '0:13:30', 10, 0),
+(2, 6, 6, 6, '0:14:05', 8, 0);
+
+-- Bangladesh Grand Prix (race_id = 1)
+INSERT INTO race_results (race_id, racer_id, car_id, position, finish_time, points, dnf) VALUES
+(1, 2, 2, 1, '0:12:28', 25, 0),
+(1, 3, 3, 2, '0:12:35', 18, 0),
+(1, 1, 1, 3, '0:12:40', 15, 0),
+(1, 4, 4, 4, '0:13:08', 12, 0),
+(1, 5, 5, 5, '0:13:25', 10, 0),
+(1, 6, 6, 6, '0:14:02', 8, 0);
+
+-- ============================================================
+-- DONE ✔ SYSTEM READY
+-- ============================================================
