@@ -1,17 +1,23 @@
-🏎️ pGR1D — Car Racing Management System
-A PHP + MySQL web application for managing car racers, cars, race schedules, and race results. Built as a university project by Somaya Hossain (ID: 24203030).
+# 🏎️ pGR1D — Car Racing Management System
 
-📌 Features
+A PHP + MySQL web application for managing car racers, cars, race schedules, and race results. Built as a university project by **Somaya Hossain (ID: 24203030)**.
 
-Racer Registration — Add new racers with personal details (name, age, city, nationality, phone)
-Car Management — Insert and assign cars to registered racers with specs (speed, engine CC, color, team)
-Edit & Delete — Full CRUD operations for both racers and cars
-Race Schedules — View all upcoming and completed races with track info and dates
-Race Results — Detailed per-race leaderboards showing position, finish time, and points
-Search — Search any racer by ID and view their full profile, car, and race participation history
+---
 
+## 📌 Features
 
-🗂️ Project Structure
+- **Racer Registration** — Add new racers with personal details (name, age, city, nationality, phone)
+- **Car Management** — Insert and assign cars to registered racers with specs (speed, engine CC, color, team)
+- **Edit & Delete** — Full CRUD operations for both racers and cars
+- **Race Schedules** — View all upcoming and completed races with track info and dates
+- **Race Results** — Detailed per-race leaderboards showing position, finish time, and points
+- **Search** — Search any racer by ID and view their full profile, car, and race participation history
+
+---
+
+## 🗂️ Project Structure
+
+```
 racing_management/
 │
 ├── db.php                  # Database connection
@@ -30,72 +36,122 @@ racing_management/
 ├── results.php             # Completed race results (detailed)
 │
 └── sql.txt                 # Full SQL schema + sample data
+```
 
-🗃️ Database Schema
-Database Name: racing_management
-TableDescriptionracersStores racer personal infocarsStores car specs, linked to a racertracksRace track details (name, location, length)racesRace events with date, track, and statusrace_resultsPer-race results (position, time, points)
-Key Relationships
+---
+
+## 🗃️ Database Schema
+
+**Database Name:** `racing_management`
+
+| Table          | Description                                  |
+|----------------|----------------------------------------------|
+| `racers`       | Stores racer personal info                   |
+| `cars`         | Stores car specs, linked to a racer          |
+| `tracks`       | Race track details (name, location, length)  |
+| `races`        | Race events with date, track, and status     |
+| `race_results` | Per-race results (position, time, points)    |
+
+### Key Relationships
+
+```
 racers (1) ──── (many) cars
 tracks (1) ──── (many) races
 races  (1) ──── (many) race_results
 racers (1) ──── (many) race_results
 cars   (1) ──── (many) race_results
+```
 
-⚙️ Setup Instructions
-Prerequisites
+---
 
-PHP 7.4+
-MySQL 5.7+ or MariaDB
-XAMPP / WAMP / LAMP (any local server)
+## ⚙️ Setup Instructions
 
-Steps
+### Prerequisites
 
-Clone the repository
+- PHP 7.4+
+- MySQL 5.7+ or MariaDB
+- XAMPP / WAMP / LAMP (any local server)
 
-bash   git clone https://github.com/your-username/racing-management-system.git
+### Steps
 
-Move files to your server's root
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/racing-management-system.git
+   ```
 
+2. **Move files to your server's root**
+   ```
    XAMPP → htdocs/racing-management/
    WAMP  → www/racing-management/
+   ```
 
-Import the database
+3. **Import the database**
+   - Open **phpMyAdmin**
+   - Create a new database named `racing_management`
+   - Import `sql.txt` (run as SQL)
 
-Open phpMyAdmin
-Create a new database named racing_management
-Import sql.txt (run as SQL)
-
-
-Configure the connection in db.php
-
-php   $host = 'localhost';
+4. **Configure the connection** in `db.php`
+   ```php
+   $host = 'localhost';
    $db   = 'racing_management';
    $user = 'root';
    $pass = '';       // change if you have a MySQL password
+   ```
 
-Run the app
-
+5. **Run the app**
+   ```
    http://localhost/racing-management/index.php
+   ```
 
-📸 Pages Overview
-PageURLPurposeHomeindex.phpLanding page with navigationRegister Racerregister.phpAdd a new racerInsert Carinsert_car.phpAdd a car and assign to racerView Allview.phpFull CRUD table for racers & carsEdit Raceredit_racer.php?id=XUpdate racer detailsEdit Caredit_car.php?id=XUpdate car detailsSearchsearch.phpSearch by racer IDRace Schedulesrace_schedules.phpView all racesResultsresults.phpCompleted race results
+---
 
-🛠️ Tech Stack
-LayerTechnologyFrontendHTML5, CSS3 (vanilla)BackendPHP (procedural, mysqli)DatabaseMySQLFontsGoogle Fonts — Bebas Neue, OswaldServerXAMPP / WAMP
+## 📸 Pages Overview
 
-📋 Sample Data Included
-The sql.txt file includes ready-to-use sample data:
+| Page | URL | Purpose |
+|------|-----|---------|
+| Home | `index.php` | Landing page with navigation |
+| Register Racer | `register.php` | Add a new racer |
+| Insert Car | `insert_car.php` | Add a car and assign to racer |
+| View All | `view.php` | Full CRUD table for racers & cars |
+| Edit Racer | `edit_racer.php?id=X` | Update racer details |
+| Edit Car | `edit_car.php?id=X` | Update car details |
+| Search | `search.php` | Search by racer ID |
+| Race Schedules | `race_schedules.php` | View all races |
+| Results | `results.php` | Completed race results |
 
-6 Racers — Saad, Abeer, Zaman, Pranto, Rayan, Somaya Hossain
-6 Cars — Ferrari, Red Bull, Mercedes, McLaren, Audi, Porsche
-3 Tracks — Dhaka Grand Circuit, Chittagong Coastal Drag, Rajshahi Ring
-3 Races — Bangladesh Grand Prix (Completed), Coastal Speed Festival (Completed), Rajshahi Open Cup (Upcoming)
-Full race results for both completed races
+---
 
+## 🛠️ Tech Stack
 
-👩‍💻 Author
-Somaya Hossain
+| Layer | Technology |
+|-------|------------|
+| Frontend | HTML5, CSS3 (vanilla) |
+| Backend | PHP (procedural, `mysqli`) |
+| Database | MySQL |
+| Fonts | Google Fonts — Bebas Neue, Oswald |
+| Server | XAMPP / WAMP |
+
+---
+
+## 📋 Sample Data Included
+
+The `sql.txt` file includes ready-to-use sample data:
+
+- **6 Racers** — Saad, Abeer, Zaman, Pranto, Rayan, Somaya Hossain
+- **6 Cars** — Ferrari, Red Bull, Mercedes, McLaren, Audi, Porsche
+- **3 Tracks** — Dhaka Grand Circuit, Chittagong Coastal Drag, Rajshahi Ring
+- **3 Races** — Bangladesh Grand Prix (Completed), Coastal Speed Festival (Completed), Rajshahi Open Cup (Upcoming)
+- **Full race results** for both completed races
+
+---
+
+## 👩‍💻 Author
+
+**Somaya Hossain**
 Student ID: 24203030
 
-📄 License
+---
+
+## 📄 License
+
 This project is for educational purposes. Free to use and modify.
