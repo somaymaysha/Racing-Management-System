@@ -1,6 +1,6 @@
 # 🏎️ pGR1D — Car Racing Management System
 
-A PHP + MySQL web application for managing car racers, cars, race schedules, and race results. Built as a university project by **Somaya Hossain **.
+A PHP + MySQL web application for managing car racers, cars, race schedules, and race results. Built as a university project by Somaya Hossain .
 
 ---
 
